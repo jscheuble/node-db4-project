@@ -2,12 +2,17 @@ const db = require("../data/db-config");
 
 module.exports = {
   getRecipes,
+  getRecipe,
   getShoppingList,
   getInstructions,
 };
 
 function getRecipes() {
   return db("recipe");
+}
+
+function getRecipe(id) {
+  return db("recipe").where({ id }).first();
 }
 
 function getShoppingList(recipe_id) {
@@ -18,6 +23,6 @@ function getShoppingList(recipe_id) {
 
 function getInstructions(recipe_id) {
   return db("step as s")
-    .select("s.step_number, s.instruction")
+    .select("s.step_number", "s.instruction")
     .where({ recipe_id });
 }
